@@ -58,7 +58,7 @@
 |-----------|---|
 | **URL** | `http://localhost:7860/v1` |
 | **API Key** | `dummy` (아무 글자나 OK) |
-| **Model** | `gpt-5.2` (추천) |
+| **Model** | `gpt-5.1` (추천) |
 
 #### 📱 모바일에서 쓰려면?
 
@@ -126,4 +126,5 @@ A: 네! Node.js 설치 후 터미널에서 `npm install` → `node server.mjs --
 | `package.json` | 프로젝트 설정 (수정 X) |
 | `tokens.json` | 인증 토큰 (자동 생성, 🔒공유 금지!) |
 | `README.md` | 이 문서 |
+
 
