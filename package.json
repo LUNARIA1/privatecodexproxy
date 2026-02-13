@@ -1,0 +1,14 @@
+{
+  "name": "chatgpt-proxy",
+  "version": "1.0.0",
+  "description": "ChatGPT OAuth Proxy Server for RisuAI - based on opencode's codex.ts",
+  "main": "server.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "auth": "node server.mjs --auth-only"
+  },
+  "dependencies": {
+    "open": "^10.1.0"
+  }
+}
