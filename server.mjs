@@ -28,6 +28,7 @@ const OAUTH_PORT = 1455;         // OAuth callback port (same as opencode)
 const PROXY_PORT = 7860;         // Proxy server port for RisuAI
 const TOKEN_FILE = path.join(__dirname, "tokens.json");
 const VERSION = "1.0.0";
+const REQUIRED_API_KEY = (process.env.PROXY_API_KEY || "").trim();
 
 // ==================== PKCE Helpers ====================
 function generateRandomString(length) {
@@ -375,6 +376,24 @@ async function startProxyServer() {
     }
 
     const url = new URL(req.url, `http://localhost:${PROXY_PORT}`);
+
+    // Optional inbound API key guard for public exposure.
+    // Enabled only when PROXY_API_KEY env var is set.
+    if (REQUIRED_API_KEY && url.pathname !== "/auth") {
+      const authHeader = req.headers["authorization"] || "";
+      const bearer = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : authHeader;
+      if (bearer !== REQUIRED_API_KEY) {
+        res.writeHead(401, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({
+          error: {
+            message: "Unauthorized",
+            type: "auth_error",
+            code: "invalid_api_key",
+          }
+        }));
+        return;
+      }
+    }
 
     // 모든 요청 로깅 (디버깅용)
     console.log(`[${new Date().toISOString()}] ${req.method} ${url.pathname}`);

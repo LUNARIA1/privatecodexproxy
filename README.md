@@ -1,7 +1,3 @@
-# 먀달(https://m.cafe.daum.net/subdued20club/VrjL/959264) 전용 배포입니다!
-
----
-
 # 🔮 ChatGPT → RisuAI 프록시 서버
 
 > ChatGPT Plus/Pro 구독자라면, **별도 API 결제 없이** RisuAI에서 GPT-4o, GPT-5.2 등을 쓸 수 있습니다.
@@ -133,3 +129,20 @@ A: 네! Node.js 설치 후 터미널에서 `npm install` → `node server.mjs --
 
 
 
+---
+
+## Public Share (No Domain, Free Tunnel)
+
+For non-technical users, use the files below:
+
+1. Run `4_start_public_share.bat`
+2. Wait until `PUBLIC_LINK.txt` opens
+3. Send the values in `PUBLIC_LINK.txt`:
+   - API Endpoint
+   - API Key
+   - Model example
+4. Keep the start window open while users are connected
+
+Stop sharing anytime with:
+
+- `5_stop_public_share.bat`
