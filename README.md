@@ -39,16 +39,19 @@
 
 ### 3️⃣ 서버 시작 (매번)
 
-**`3_서버시작.bat`** 을 더블클릭하세요.
+**`4_start_public_share.bat`** 을 더블클릭하세요.
 
 이런 화면이 뜨면 성공:
 ```
-🚀 ChatGPT Proxy Server 시작!
-  로컬 URL:    http://localhost:7860/v1
-  LAN URL:     http://192.168.x.x:7860/v1
+🚀 PUBLIC_LINK.txt
+   ChatGPT Proxy Public Share (Quick Tunnel)
+   =========================================
+   API Endpoint (RisuAI): `https://xxx-xxx-xxx-xxx.trycloudflare.com/v1`
+   API Key: `share-xxx...`
+   Model example: `gpt-4o` (실제로 gpt-4o는 쓸 수 없어요. 사용할 수 있는 모델은 아래를 참조하세요)
 ```
 
-> ⚠️ **이 창을 끄면 안 됩니다!** RisuAI 쓰는 동안 계속 켜두세요.
+> ⚠️ **콘솔창을 끄면 안 됩니다!** RisuAI 쓰는 동안 계속 켜두세요. 종료하고자 할 때에는 `5_stop_public_share.bat`를 한 번 실행해주세요.
 
 ---
 
@@ -56,20 +59,10 @@
 
 | 설정 항목 | 값 |
 |-----------|---|
-| **URL** | `http://localhost:7860/v1` |
-| **API Key** | `dummy` (아무 글자나 OK) |
+| **URL** | `https://xxx-xxx-xxx-xxx.trycloudflare.com/v1` |
+| **API Key** | `share-xxx...` |
 | **Model** | `gpt-5.1` (추천) |
 
-#### 📱 모바일에서 쓰려면?
-
-같은 Wi-Fi에 연결된 상태에서, URL을 서버 시작 시 표시되는 **LAN URL**로 변경:
-```
-http://192.168.x.x:7860/v1
-```
-(x.x는 서버 시작할 때 터미널에 표시되는 숫자를 쓰세요)
-
-> 안 되면 Windows 방화벽 문제일 수 있습니다.
-> 관리자 PowerShell에서: `netsh advfirewall firewall add rule name="ChatGPT Proxy" dir=in action=allow protocol=TCP localport=7860`
 
 ---
 
@@ -122,27 +115,11 @@ A: 네! Node.js 설치 후 터미널에서 `npm install` → `node server.mjs --
 | `1_설치.bat` | 최초 1회 실행 (의존성 설치) |
 | `2_인증.bat` | ChatGPT 계정 인증 |
 | `3_서버시작.bat` | 프록시 서버 시작 |
+| `4_start_public_share.bat` | 프록시 서버 시작 및 클라우드 플레어 터널 연결 |
+| `5_stop_public_share.bat` | 종료 |
 | `server.mjs` | 프록시 서버 본체 (수정 X) |
 | `package.json` | 프로젝트 설정 (수정 X) |
 | `tokens.json` | 인증 토큰 (자동 생성, 🔒공유 금지!) |
 | `README.md` | 이 문서 |
 
 
-
----
-
-## Public Share (No Domain, Free Tunnel)
-
-For non-technical users, use the files below:
-
-1. Run `4_start_public_share.bat`
-2. Wait until `PUBLIC_LINK.txt` opens
-3. Send the values in `PUBLIC_LINK.txt`:
-   - API Endpoint
-   - API Key
-   - Model example
-4. Keep the start window open while users are connected
-
-Stop sharing anytime with:
-
-- `5_stop_public_share.bat`
