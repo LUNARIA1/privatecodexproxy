@@ -1,3 +1,7 @@
+# 먀달(https://m.cafe.daum.net/subdued20club/VrjL/959264) 전용 배포입니다!
+
+---
+
 # 🔮 ChatGPT → RisuAI 프록시 서버
 
 > ChatGPT Plus/Pro 구독자라면, **별도 API 결제 없이** RisuAI에서 GPT-4o, GPT-5.2 등을 쓸 수 있습니다.
@@ -121,5 +125,6 @@ A: 네! Node.js 설치 후 터미널에서 `npm install` → `node server.mjs --
 | `package.json` | 프로젝트 설정 (수정 X) |
 | `tokens.json` | 인증 토큰 (자동 생성, 🔒공유 금지!) |
 | `README.md` | 이 문서 |
+
 
 
