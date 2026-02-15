@@ -1,30 +1,36 @@
-# privatecodexproxy Linux 초보자 가이드
+# privatecodexproxy Linux Guide (Beginner)
 
-이 문서는 Linux(특히 Google Cloud Ubuntu VM)에서  
-컴퓨터를 잘 모르는 분도 그대로 따라 할 수 있게 만든 안내입니다.
+Google Cloud Ubuntu VM 기준으로, 완전 초보도 복붙으로 실행할 수 있게 정리했습니다.
 
-Windows의 이 3단계를 Linux에서도 똑같이 씁니다.
+## 목표
+
+Windows에서 하던 이 순서를 Linux에서도 그대로 사용합니다.
 - `1_설치.bat` -> `1_설치.sh`
 - `2_인증.bat` -> `2_인증.sh`
 - `4_start_public_share.bat` -> `4_start_public_share.sh`
 
-## 1) 진짜 처음부터: 필수 준비물 설치
+그리고 추가로:
+- `6_백그라운드시작.sh` -> `screen`으로 백그라운드 실행 (SSH 종료/내 PC 종료 후에도 유지)
+- `7_백그라운드중지.sh` -> 백그라운드 중지
+- `8_백그라운드상태.sh` -> 상태 확인
 
-아래 명령은 Ubuntu VM에서 그대로 복붙하면 됩니다.
+## 1) 필수 프로그램 설치 (처음 1번만)
+
+아래를 그대로 실행하세요.
 
 ```bash
 sudo apt update
 sudo apt install -y git curl ca-certificates gnupg
 ```
 
-Node.js(LTS) 설치:
+Node.js LTS 설치:
 
 ```bash
 curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
-설치 확인:
+확인:
 
 ```bash
 node -v
@@ -33,87 +39,98 @@ git --version
 curl --version
 ```
 
-버전 숫자가 나오면 정상입니다.
-
 ## 2) 프로젝트 받기 (한 줄)
-
-아래 한 줄 실행:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/LUNARIA1/privatecodexproxy/linuxver/bootstrap_linux.sh | bash
 ```
 
-완료되면 폴더 이동:
-
 ```bash
 cd privatecodexproxy
-```
-
-## 3) 실행 권한 부여 (한 번만)
-
-```bash
 chmod +x ./*.sh
 ```
 
-## 4) 1단계 설치
+## 3) 기본 설정
 
 ```bash
 ./1_설치.sh
-```
-
-## 5) 2단계 인증
-
-```bash
 ./2_인증.sh
 ```
 
-중요:
-- 데스크톱 Linux면 브라우저 인증 창이 열립니다.
-- GCP SSH처럼 화면이 없는 서버면 자동으로 `device auth` 모드로 바뀝니다.
-- 터미널에 나오는 URL/코드를 휴대폰 또는 내 PC 브라우저에서 입력해 인증하세요.
+인증 참고:
+- 데스크톱 환경이면 브라우저가 열립니다.
+- GCP SSH처럼 화면이 없는 환경이면 자동으로 device auth 모드가 켜집니다.
+- 터미널에 나온 URL/코드를 내 PC 또는 휴대폰 브라우저에서 입력해서 인증하면 됩니다.
 
-## 6) 4단계 공개 공유 시작
+## 4) 실행 방법 2가지
+
+### A. 일반 실행 (터미널 열어둬야 함)
 
 ```bash
 ./4_start_public_share.sh
 ```
 
-성공하면 `PUBLIC_LINK.txt` 파일이 생깁니다.  
-그 안의 값을 RisuAI에 넣으세요:
-
-- URL: `https://...trycloudflare.com/v1`
-- API Key: `share-...`
-
-주의:
-- 공유 중에는 터미널 창을 닫지 마세요.
-- URL은 실행할 때마다 바뀝니다.
-
-## 7) 공유 종료
+### B. 백그라운드 실행 (권장, 터미널 닫아도 유지)
 
 ```bash
-./5_stop_public_share.sh
+./6_백그라운드시작.sh
 ```
 
-## 가장 많이 막히는 문제
+성공하면 `PUBLIC_LINK.txt`에 아래 정보가 저장됩니다.
+- URL: `https://xxxx.trycloudflare.com/v1`
+- API Key: `share-xxxx`
 
-`sudo: command not found`
-- Ubuntu가 아닌 다른 배포판일 수 있습니다. (Debian/Ubuntu 기준 문서)
+## 5) 백그라운드 관리
 
-`node: command not found`
-- Node.js 설치가 안 된 상태입니다. 위 1단계 Node.js 설치부터 다시 실행하세요.
+상태 확인:
+
+```bash
+./8_백그라운드상태.sh
+```
+
+중지:
+
+```bash
+./7_백그라운드중지.sh
+```
+
+screen 세션 직접 보기:
+
+```bash
+screen -r privatecodexproxy_share
+```
+
+분리(detach):
+- `Ctrl + A` 누르고 `D`
+
+## 6) 주의사항
+
+- VM(구글 클라우드 인스턴스) 자체를 중지하면 서버도 중지됩니다.
+- 공유 URL은 재시작할 때마다 변경됩니다.
+- `tokens.json`은 절대 공유하지 마세요.
+
+## 7) 문제 해결
 
 `Permission denied`
-- `chmod +x ./*.sh`를 먼저 실행하세요.
 
-`Auth failed`
-- `./2_인증.sh`를 다시 실행하세요.
-- 그래도 안 되면 `tokens.json` 삭제 후 재시도:
+```bash
+chmod +x ./*.sh
+```
+
+`node: command not found`
+- Node.js 설치가 안 된 상태입니다. 1단계 다시 실행하세요.
+
+인증 실패 시:
+
 ```bash
 rm -f tokens.json
 ./2_인증.sh
 ```
 
-`4_start_public_share.sh`가 바로 종료됨
-- 잠시 후 다시 실행하세요.
-- 네트워크 정책/방화벽이 강한 환경이면 Cloudflare quick tunnel 연결이 지연될 수 있습니다.
+백그라운드 실행이 안 될 때:
+
+```bash
+./8_백그라운드상태.sh
+tail -n 50 screen-public-share.log
+```
 
