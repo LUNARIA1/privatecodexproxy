@@ -60,7 +60,7 @@ chmod +x ./*.sh
 인증 참고:
 - 데스크톱 환경이면 브라우저가 열립니다.
 - GCP SSH처럼 화면이 없는 환경이면 자동으로 device auth 모드가 켜집니다.
-- 터미널에 나온 URL/코드를 내 PC 또는 휴대폰 브라우저에서 입력해서 인증하면 됩니다.
+- 즉시 보이는 URL `https://auth.openai.com/codex/device` 에 접속해서, 터미널에 나온 코드를 입력하면 됩니다.
 
 ## 4) 실행 방법 2가지
 
@@ -133,4 +133,3 @@ rm -f tokens.json
 ./8_백그라운드상태.sh
 tail -n 50 screen-public-share.log
 ```
-
