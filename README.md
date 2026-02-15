@@ -1,6 +1,10 @@
-# privatecodexproxy Linux Guide (Beginner)
+# 먀달(https://m.cafe.daum.net/subdued20club/VrjL/959264) 전용 배포입니다!
 
-Google Cloud Ubuntu VM 기준으로, 완전 초보도 복붙으로 실행할 수 있게 정리했습니다.
+---
+
+# privatecodexproxy Linux Guide 
+
+Google Cloud Ubuntu VM 기준으로, 복붙으로 실행할 수 있게 정리했습니다.
 
 ## 목표
 
@@ -39,7 +43,7 @@ git --version
 curl --version
 ```
 
-## 2) 프로젝트 받기 (한 줄)
+## 2) 프로젝트 받기
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/LUNARIA1/privatecodexproxy/linuxver/bootstrap_linux.sh | bash
@@ -64,13 +68,13 @@ chmod +x ./*.sh
 
 ## 4) 실행 방법 2가지
 
-### A. 일반 실행 (터미널 열어둬야 함)
+### A. 일반 실행 (터미널 열어둬야 함. 컴퓨터 못 끔)
 
 ```bash
 ./4_start_public_share.sh
 ```
 
-### B. 백그라운드 실행 (권장, 터미널 닫아도 유지)
+### B. 백그라운드 실행 (이것을 권장, 닫고 컴퓨터 꺼도 유지)
 
 ```bash
 ./6_백그라운드시작.sh
@@ -106,7 +110,7 @@ screen -r privatecodexproxy_share
 ## 6) 주의사항
 
 - VM(구글 클라우드 인스턴스) 자체를 중지하면 서버도 중지됩니다.
-- 공유 URL은 재시작할 때마다 변경됩니다.
+- 공유 URL은 서버를 재시작할 때마다 변경됩니다.
 - `tokens.json`은 절대 공유하지 마세요.
 
 ## 7) 문제 해결
