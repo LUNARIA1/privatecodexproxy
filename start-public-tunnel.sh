@@ -44,7 +44,9 @@ on_error() {
 
 remove_if_exists() {
   local file="$1"
-  [ -f "$file" ] && rm -f "$file"
+  if [ -f "$file" ]; then
+    rm -f "$file"
+  fi
 }
 
 is_pid_running() {
