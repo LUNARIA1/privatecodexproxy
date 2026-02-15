@@ -165,7 +165,7 @@ resolve_cloudflared_path() {
 
   ensure_command curl "Install curl and try again."
 
-  echo "[SETUP] cloudflared not found. Downloading local binary..."
+  echo "[SETUP] cloudflared not found. Downloading local binary..." >&2
   local arch
   arch="$(uname -m)"
   local url=""
@@ -177,6 +177,10 @@ resolve_cloudflared_path() {
 
   curl -fL "$url" -o "$local_bin"
   chmod +x "$local_bin"
+  if [ ! -x "$local_bin" ]; then
+    echo "[ERROR] cloudflared download failed: $local_bin" >&2
+    exit 1
+  fi
   echo "$local_bin"
 }
 
