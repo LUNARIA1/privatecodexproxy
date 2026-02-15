@@ -35,3 +35,15 @@ if [ -f "$LOG_FILE" ]; then
   tail -n 30 "$LOG_FILE" || true
 fi
 
+for f in \
+  "$SCRIPT_DIR/public-server.err.log" \
+  "$SCRIPT_DIR/public-server.out.log" \
+  "$SCRIPT_DIR/public-tunnel.err.log" \
+  "$SCRIPT_DIR/public-tunnel.out.log"
+do
+  if [ -f "$f" ]; then
+    echo
+    echo "[INFO] $(basename "$f")"
+    tail -n 30 "$f" || true
+  fi
+done
