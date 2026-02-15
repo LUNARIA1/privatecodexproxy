@@ -15,8 +15,15 @@ echo
 AUTH_LOG="$SCRIPT_DIR/auth_result.log"
 rm -f "$AUTH_LOG"
 
+AUTH_ARGS=(--auth-only)
+if [ -z "${DISPLAY:-}" ] && [ -z "${WAYLAND_DISPLAY:-}" ]; then
+  echo "[INFO] No desktop session detected. Switching to device auth mode."
+  echo "[INFO] Follow the URL/code shown in terminal on your phone or PC browser."
+  AUTH_ARGS+=(--device)
+fi
+
 set +e
-node server.mjs --auth-only >"$AUTH_LOG" 2>&1
+node server.mjs "${AUTH_ARGS[@]}" >"$AUTH_LOG" 2>&1
 AUTH_EXIT=$?
 set -e
 
@@ -35,4 +42,3 @@ else
 fi
 
 exit "$AUTH_EXIT"
-
