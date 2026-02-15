@@ -17,6 +17,31 @@ SERVER_PID=""
 TUNNEL_PID=""
 API_KEY=""
 
+print_debug_logs() {
+  for f in \
+    "$SERVER_ERR_LOG" \
+    "$SERVER_OUT_LOG" \
+    "$TUNNEL_ERR_LOG" \
+    "$TUNNEL_OUT_LOG"
+  do
+    if [ -f "$f" ]; then
+      echo "----- $(basename "$f") -----" >&2
+      tail -n 80 "$f" >&2 || true
+      echo >&2
+    fi
+  done
+}
+
+on_error() {
+  local line="$1"
+  local cmd="$2"
+  local code="${3:-1}"
+  echo "[ERROR] start-public-tunnel.sh failed at line $line (exit=$code)" >&2
+  echo "[ERROR] Command: $cmd" >&2
+  print_debug_logs
+  exit "$code"
+}
+
 remove_if_exists() {
   local file="$1"
   [ -f "$file" ] && rm -f "$file"
@@ -161,6 +186,7 @@ cleanup_on_exit() {
 }
 
 trap cleanup_on_exit EXIT INT TERM
+trap 'on_error "$LINENO" "$BASH_COMMAND" "$?"' ERR
 
 echo
 echo "========================================"
@@ -279,4 +305,3 @@ while true; do
     exit 1
   fi
 done
-

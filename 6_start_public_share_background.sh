@@ -60,4 +60,8 @@ done
 echo "[WARN] PUBLIC_LINK.txt is not ready yet."
 echo "Check recent logs:"
 tail -n 40 "$LOG_FILE" 2>/dev/null || true
-
+if screen_session_exists; then
+  echo "[INFO] Session is still running. Wait a bit more, then run ./8_백그라운드상태.sh"
+else
+  echo "[ERROR] Session ended early. Run ./8_백그라운드상태.sh for details."
+fi
